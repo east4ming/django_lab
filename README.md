@@ -200,10 +200,10 @@ uvicorn config.asgi:application --host 0.0.0.0 --reload --reload-include '*.html
 >
 > [New apps created are located in the project root, not inside the project slug · Issue #1725 · cookiecutter/cookiecutter-django (github.com)](https://github.com/cookiecutter/cookiecutter-django/issues/1725)
 
-1 - 使用 `python manage.py startapp` 创建 app:  `<name-of-the-app>`
-2 - 移动 `<name-of-the-app>` 目录到 `<project_slug>` 目录
-3 - 编辑 `<project_slug>/<name-of-the-app>/apps.py` 并修改 `name = "<name-of-the-app>"` 为 `name = "<project_slug>.<name-of-the-app>"`
-4 - 在你的 [`LOCAL_APPS` on `config/settings/base.py`](https://github.com/pydanny/cookiecutter-django/blob/175381213672b409f940730c2bafc129815d5595/{{cookiecutter.project_slug}}/config/settings/base.py#L79), 添加 `"<project_slug>.<name-of-the-app>.apps.<NameOfTheAppConfigClass>",`
+1. 使用 `python manage.py startapp` 创建 app:  `<name-of-the-app>`
+2. 移动 `<name-of-the-app>` 目录到 `<project_slug>` 目录
+3. 编辑 `<project_slug>/<name-of-the-app>/apps.py` 并修改 `name = "<name-of-the-app>"` 为 `name = "<project_slug>.<name-of-the-app>"`
+4. 在你的 [`LOCAL_APPS` on `config/settings/base.py`](https://github.com/pydanny/cookiecutter-django/blob/175381213672b409f940730c2bafc129815d5595/{{cookiecutter.project_slug}}/config/settings/base.py#L79), 添加 `"<project_slug>.<name-of-the-app>.apps.<NameOfTheAppConfigClass>",`
 
 ## Settings
 
