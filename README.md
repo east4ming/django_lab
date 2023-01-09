@@ -7,7 +7,84 @@ My Django Study & Playground Lab!
 
 License: MIT
 
+## 前提
+
+至少需要:
+
+```bash
+sudo apt install -y libpq-dev
+```
+
+安装 PG:
+
+```bash
+# Create the file repository configuration:
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+
+# Import the repository signing key:
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
+# Update the package lists:
+sudo apt-get update
+
+# Install the latest version of PostgreSQL.
+# If you want a specific version, use 'postgresql-12' or similar instead of 'postgresql':
+sudo apt-get -y install postgresql-14
+```
+
+WSL 启动 PG:
+
+```bash
+# the services that you currently have running on your WSL distribution
+service --status-all
+
+# .zshrc
+vi ~/.zshrc
+```
+
+添加的内容如下:
+
+```bash
+# pg
+alias start-pg='sudo service postgresql start'
+alias run-pg='sudo -u postgres psql'
+```
+
+设置初始密码:
+
+```bash
+sudo -u postgres psql postgres
+```
+
+```postgresql
+\password postgres
+#输入密码两次
+\q
+```
+
+修改 `pg_hba.conf` 以使用 `createdb`:
+
+```bash
+sudo vi /etc/postgresql/14/main/pg_hba.conf
+```
+
+改为:
+
+```
+local   all             postgres                                md5
+```
+
+重启:
+
+```bash
+sudo service postgresql restart
+```
+
 ## Project 初始化
+
+> 📚️**Reference:**
+>
+> [Getting Up and Running Locally — Cookiecutter Django 2023.2.1 documentation (cookiecutter-django.readthedocs.io)](https://cookiecutter-django.readthedocs.io/en/latest/developing-locally.html)
 
 ### cookiecutter-django
 
@@ -51,6 +128,12 @@ cookiecutter https://github.com/cookiecutter/cookiecutter-django
 }
 ```
 
+pre-commit:
+
+```bash
+pre-commit install
+```
+
 ### VSCode
 
 添加 vscode workspace: `.vscode/django_lab.code-workspace`
@@ -67,10 +150,48 @@ source .venv/bin/activate
 ### 安装依赖
 
 ```bash
-sudo apt install -y libpq-dev
-
 python -m pip install --upgrade pip
 python -m pip install -r requirements/local.txt
+```
+
+### 创建一个新的 PostgreSQL database
+
+```bash
+createdb --username=postgres <project_slug> # django_lab
+```
+
+### 设置 Database 相关的 Env
+
+```bash
+$ export DATABASE_URL=postgres://postgres:<password>@127.0.0.1:5432/<DB name given to createdb>
+# Optional: set broker URL if using Celery
+$ export CELERY_BROKER_URL=redis://localhost:6379/0
+```
+
+### 设置其他 Env
+
+为了帮助设置环境变量:
+
+在项目的根目录下创建一个`.env`文件，并在其中定义所需的所有变量。然后你只需要在你的机器中设置`DJANGO_READ_DOT_ENV_FILE=True`，所有的变量都会被读取。
+
+### Apply migrations
+
+```bash
+python manage.py migrate
+```
+
+### Runserver
+
+WSGI:
+
+```bash
+python manage.py runserver 0.0.0.0:8000
+```
+
+ASGI:
+
+```bash
+uvicorn config.asgi:application --host 0.0.0.0 --reload --reload-include '*.html'
 ```
 
 ## Settings
