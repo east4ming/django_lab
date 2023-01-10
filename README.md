@@ -121,7 +121,7 @@ cookiecutter https://github.com/cookiecutter/cookiecutter-django
     "use_heroku": "n",
     "ci_tool": "Github",
     "keep_local_envs_in_vcs": "y",
-    "debug": "y",
+    "debug": "n",
     "_template": "https://github.com/cookiecutter/cookiecutter-django",
     "_output_dir": "/home/casey/Projects/django-lab"
   }
