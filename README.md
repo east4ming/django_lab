@@ -313,9 +313,7 @@ python merge_production_dotenvs_in_dotenv.py
 
 ### 提示与技巧
 
-#### Debugging
-
-##### 查看日志
+#### 查看日志
 
 ```bash
 export COMPOSE_FILE=local.yml
@@ -323,17 +321,36 @@ docker-compose logs celeryworker
 docker-compose top celeryworker
 ```
 
-##### Mailhog
+#### Mailhog
 
 Mailhog 地址为: <http://127.0.0.1:8025>
 
-##### 文档
+#### 文档
 
 文档地址为: <http://127.0.0.1:9000>
 
-##### Celery & Flower
+更新文档:
+
+```bash
+docker-compose -f local.yml up docs
+```
+
+#### Celery & Flower
 
 Flower 地址为: <http://localhost:5555/>
+
+#### Pytest
+
+```bash
+docker-compose -f local.yml run --rm django pytest
+```
+
+#### Coverage
+
+```bash
+docker-compose -f local.yml run --rm django coverage run -m pytest
+docker-compose -f local.yml run --rm django coverage report
+```
 
 ## Settings
 
