@@ -352,6 +352,42 @@ docker-compose -f local.yml run --rm django coverage run -m pytest
 docker-compose -f local.yml run --rm django coverage report
 ```
 
+#### PG 备份
+
+创建备份:
+
+```bash
+docker-compose -f local.yml exec postgres backup
+```
+
+> ⚠️**Warning:**
+> 脚本不支持 PG 用户为: `postgres`
+
+查看已存在的备份:
+
+```bash
+docker-compose -f local.yml exec postgres backups
+```
+
+复制备份到本地:
+
+```bash
+docker-compose cp postgres:/backups ./backups
+```
+
+恢复数据:
+
+```bash
+docker-compose -f local.yml exec postgres restore backup_2018_03_13T09_05_07.sql.gz
+```
+
+备份到 AWS S3:
+
+```bash
+docker-compose -f production.yml run --rm awscli upload
+docker-compose -f production.yml run --rm awscli download backup_2018_03_13T09_05_07.sql.gz
+```
+
 ## Settings
 
 Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).

@@ -10,5 +10,5 @@ REDIS_URL=redis://redis:6379/0
 # ------------------------------------------------------------------------------
 
 # Flower
-CELERY_FLOWER_USER=postgres
-CELERY_FLOWER_PASSWORD=dajidali
+CELERY_FLOWER_USER=uY3fNUCS9YSm
+CELERY_FLOWER_PASSWORD=kLmFy2NYtsdquwh5L5VvKHk7GrzbDFF6

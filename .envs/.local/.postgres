@@ -1,7 +1,7 @@
 # PostgreSQL
 # ------------------------------------------------------------------------------
-POSTGRES_HOST=postgres
-POSTGRES_PORT=5432
-POSTGRES_DB=django_lab
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=dajidali
+POSTGRES_HOST = postgres
+POSTGRES_PORT = 5432
+POSTGRES_DB = django_lab
+POSTGRES_USER = uY3fNUCS9YSm
+POSTGRES_PASSWORD = kLmFy2NYtsdquwh5L5VvKHk7GrzbDFF6
