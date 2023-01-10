@@ -260,6 +260,7 @@ Session.vim
 tags
 
 ### Project template
+MailHog
 django_lab/media/
 
 .pytest_cache/
