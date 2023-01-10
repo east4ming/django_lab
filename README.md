@@ -8,7 +8,13 @@ My Django Study & Playground Lab!
 
 License: MIT
 
-## 前提
+## Project 初始化 - 本地环境开发
+
+> 📚️**Reference:**
+>
+> [Getting Up and Running Locally — Cookiecutter Django 2023.2.1 documentation (cookiecutter-django.readthedocs.io)](https://cookiecutter-django.readthedocs.io/en/latest/developing-locally.html)
+
+### 前提
 
 至少需要:
 
@@ -81,15 +87,10 @@ local   all             postgres                                md5
 sudo service postgresql restart
 ```
 
-## Project 初始化
-
-> 📚️**Reference:**
->
-> [Getting Up and Running Locally — Cookiecutter Django 2023.2.1 documentation (cookiecutter-django.readthedocs.io)](https://cookiecutter-django.readthedocs.io/en/latest/developing-locally.html)
-
 ### cookiecutter-django
 
 ```bash
+pyenv shell 3.10.9
 pip install "cookiecutter>=1.7.0"
 cookiecutter https://github.com/cookiecutter/cookiecutter-django
 ```
@@ -116,7 +117,7 @@ cookiecutter https://github.com/cookiecutter/cookiecutter-django
     "use_drf": "y",
     "frontend_pipeline": "None",
     "use_celery": "y",
-    "use_mailhog": "n",
+    "use_mailhog": "y",
     "use_sentry": "n",
     "use_whitenoise": "y",
     "use_heroku": "n",
@@ -124,7 +125,7 @@ cookiecutter https://github.com/cookiecutter/cookiecutter-django
     "keep_local_envs_in_vcs": "y",
     "debug": "n",
     "_template": "https://github.com/cookiecutter/cookiecutter-django",
-    "_output_dir": "/home/casey/Projects/django-lab"
+    "_output_dir": "/home/casey/Projects"
   }
 }
 ```
@@ -132,6 +133,8 @@ cookiecutter https://github.com/cookiecutter/cookiecutter-django
 pre-commit:
 
 ```bash
+pyenv local 3.10.9
+python -m pip install pre-commit
 pre-commit install
 ```
 
@@ -142,7 +145,7 @@ pre-commit install
 ### pyenv venv
 
 ```bash
-PYENV_VERSION=3.10.8
+PYENV_VERSION=3.10.9
 
 python -m venv .venv
 source .venv/bin/activate
@@ -195,7 +198,150 @@ ASGI:
 uvicorn config.asgi:application --host 0.0.0.0 --reload --reload-include '*.html'
 ```
 
-### startapp
+## Project 初始化 - 本地容器开发
+
+> 📚**Reference:**
+>
+> [Getting Up and Running Locally With Docker — Cookiecutter Django 2023.2.1 documentation (cookiecutter-django.readthedocs.io)](https://cookiecutter-django.readthedocs.io/en/latest/developing-locally-docker.html)
+
+### 前提
+
+- Docker
+- Docker Compose
+- Pre-commit
+- Cookiecutter
+
+### Cookiecutter
+
+```bash
+cookiecutter gh:cookiecutter/cookiecutter-django
+```
+
+### 构建容器
+
+```bash
+docker-compose -f local.yml build
+```
+
+通常，如果想要模拟生产环境，请使用 `production.yml` 代替。这对于您可能需要执行的任何其他操作都是正确的:只要需要切换，就执行它!
+
+```bash
+git init
+
+pyenv shell system
+pip install pre-commit
+pre-commit install
+```
+
+### 运行容器
+
+```bash
+docker-compose -f local.yml up
+```
+
+也可以这样:
+
+```bash
+export COMPOSE_FILE=local.yml
+docker-compose up
+```
+
+后台运行:
+
+```bash
+docker-compose up -d
+```
+
+### 执行管理命令
+
+因为是一次性的, 所以需要加上 `docker-compose -f local.yml run --rm`
+
+```bash
+docker-compose -f local.yml run --rm django python manage.py migrate
+docker-compose -f local.yml run --rm django python manage.py createsuperuser
+```
+
+上面的 2 个命令第一次运行时是需要执行的.
+
+`django` 是目标 service
+
+### (可选)指定 Docker 开发服务器 IP
+
+当 `DEBUG` 设置为 `True` 时，主机将根据 `['localhost', '127.0.0.1', '[::1]']` 进行验证。这在运行 `virtualenv` 时就足够了。对于 Docker，在 `config.settings.local` 里, 将您的主机开发服务器 IP 添加到 INTERNAL_IPS 或 ALLOWED_HOSTS(如果变量存在)。
+
+### 配置环境
+
+这是从项目的 `local.yml` 中摘录的:
+
+```yaml
+# ...
+
+postgres:
+  build:
+    context: .
+    dockerfile: ./compose/production/postgres/Dockerfile
+  volumes:
+    - local_postgres_data:/var/lib/postgresql/data
+    - local_postgres_data_backups:/backups
+  env_file:
+    - ./.envs/.local/.postgres
+
+# ...
+```
+
+现在对我们来说最重要的事情是 `env_file` 部分征募 `./.envs/.local/.postgres`。通常，堆栈的行为是由一些环境变量(简称env)在`envs/`，例如，这是我们为您生成的:
+
+```
+.envs
+├── .local
+│   ├── .django
+│   └── .postgres
+└── .production
+    ├── .django
+    └── .postgres
+```
+
+根据约定，对于环境 `e` 中的任何服务 `sI` (您知道在项目根目录中有一个 `somenv.yml` 文件时，`somenv` 是一个环境) ，如果 `sI` 需要配置，则会有一个`.envs/.e/.sI` 用于存在 `sI` 服务配置文件。
+
+最后一点:你是否需要合并 `.envs/` 为一个`.env` 文件, 那么需要运行`merge_production_dotenvs_in_dotenv.py`:
+
+```bash
+python merge_production_dotenvs_in_dotenv.py
+```
+
+然后将创建 `.env` 文件，其中所有生产环境都在里边。
+
+### 提示与技巧
+
+#### Debugging
+
+##### 查看日志
+
+```bash
+export COMPOSE_FILE=local.yml
+docker-compose logs celeryworker
+docker-compose top celeryworker
+```
+
+##### Mailhog
+
+Mailhog 地址为: <http://127.0.0.1:8025>
+
+##### 文档
+
+文档地址为: <http://127.0.0.1:9000>
+
+##### Celery & Flower
+
+Flower 地址为: <http://localhost:5555/>
+
+## Settings
+
+Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
+
+## Basic Commands
+
+## Django Startapp
 
 > 📚️**Reference:**
 >
@@ -205,12 +351,6 @@ uvicorn config.asgi:application --host 0.0.0.0 --reload --reload-include '*.html
 2. 移动 `<name-of-the-app>` 目录到 `<project_slug>` 目录
 3. 编辑 `<project_slug>/<name-of-the-app>/apps.py` 并修改 `name = "<name-of-the-app>"` 为 `name = "<project_slug>.<name-of-the-app>"`
 4. 在你的 [`LOCAL_APPS` on `config/settings/base.py`](https://github.com/pydanny/cookiecutter-django/blob/175381213672b409f940730c2bafc129815d5595/{{cookiecutter.project_slug}}/config/settings/base.py#L79), 添加 `"<project_slug>.<name-of-the-app>.apps.<NameOfTheAppConfigClass>",`
-
-## Settings
-
-Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
-
-## Basic Commands
 
 ### Setting Up Your Users
 
