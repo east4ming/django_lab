@@ -268,3 +268,6 @@ django_lab/media/
 .env
 .envs/*
 !.envs/.local/
+
+# Backup
+backups/
