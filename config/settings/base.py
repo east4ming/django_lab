@@ -81,6 +81,8 @@ LOCAL_APPS = [
     # Your stuff: custom apps go here
     # https://realpython.com/courses/django-portfolio-project/
     "django_lab.projects.apps.ProjectsConfig",
+    # https://realpython.com/django-migrations-a-primer/
+    "django_lab.bitcoin_tracker",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
