@@ -1,4 +1,4 @@
-# from django.http import HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 
 from django_lab.blog.models import Blog
@@ -19,3 +19,29 @@ def view_blog(request, blog_id):
     }
 
     return render(request, "blog/view_blog.html", context)
+
+
+def see_request(request):
+    text = f"""
+        Some attributes of the HttpRequest object:
+
+        scheme: {request.scheme}
+        path:   {request.path}
+        method: {request.method}
+        GET:    {request.GET}
+        user:   {request.user}
+    """
+    return HttpResponse(text, content_type="text/plain")
+
+
+def user_info(request):
+    text = f"""
+        Selected HttpRequest.user attributes:
+
+        username:     {request.user.username}
+        is_anonymous: {request.user.is_anonymous}
+        is_staff:     {request.user.is_staff}
+        is_superuser: {request.user.is_superuser}
+        is_active:    {request.user.is_active}
+    """
+    return HttpResponse(text, content_type="text/plain")
