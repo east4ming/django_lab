@@ -69,6 +69,7 @@ THIRD_PARTY_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "allauth.socialaccount.providers.github",
     "django_celery_beat",
     "rest_framework",
     "rest_framework.authtoken",
@@ -309,6 +310,19 @@ ACCOUNT_FORMS = {"signup": "django_lab.users.forms.UserSignupForm"}
 SOCIALACCOUNT_ADAPTER = "django_lab.users.adapters.SocialAccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/forms.html
 SOCIALACCOUNT_FORMS = {"signup": "django_lab.users.forms.UserSocialSignupForm"}
+# https://dev.to/gajesh/the-complete-django-allauth-guide-la3
+SOCIALACCOUNT_QUERY_EMAIL = ACCOUNT_EMAIL_REQUIRED
+SOCIALACCOUNT_EMAIL_REQUIRED = ACCOUNT_EMAIL_REQUIRED
+SOCIALACCOUNT_STORE_TOKENS = False
+SOCIALACCOUNT_PROVIDERS = {
+    "github": {
+        "SCOPE": [
+            "user",
+            "repo",
+            "read:org",
+        ],
+    }
+}
 
 # django-rest-framework
 # -------------------------------------------------------------------------------
