@@ -84,6 +84,8 @@ LOCAL_APPS = [
     "django_lab.projects.apps.ProjectsConfig",
     # https://realpython.com/django-migrations-a-primer/
     "django_lab.bitcoin_tracker",
+    # https://realpython.com/django-view-authorization/
+    "django_lab.blog.apps.BlogConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
