@@ -1,3 +1,5 @@
-# from django.contrib import admin
+from django.contrib import admin
 
-# Register your models here.
+from django_lab.projects.models import Project
+
+admin.site.register(Project)
