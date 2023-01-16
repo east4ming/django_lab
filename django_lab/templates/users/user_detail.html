@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}User: {{ object.username }}{% endblock %}
 
@@ -24,6 +25,7 @@
     <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">My Info</a>
     <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a>
     <!-- Your Stuff: Custom user template urls -->
+    <a class="btn btn-danger" href="{% url 'account_change_password' %}" role="button">{% translate "Change Password" %}</a>
   </div>
 
 </div>
