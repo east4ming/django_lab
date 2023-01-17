@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 
@@ -45,3 +46,13 @@ def user_info(request):
         is_active:    {request.user.is_active}
     """
     return HttpResponse(text, content_type="text/plain")
+
+
+@login_required
+def private_place(request):
+    return HttpResponse("Shhh, memebers only!", content_type="text/plain")
+
+
+@user_passes_test(lambda user: user.is_staff)
+def staff_place(request):
+    return HttpResponse("Employees must wash hands", content_type="text/plain")
