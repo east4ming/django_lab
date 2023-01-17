@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Blog{% endblock %}
+
+{% comment %} Messages block exists in base.html {% endcomment %}
+
+{% block content %}
+<h1>Blog Listing</h1>
+<ul>
+{% for blog in blogs %}
+  <li> <a href="{% url 'blog:view_blog' blog.id %}">{{ blog.title }}</a> </li>
+{% endfor %}
+</ul>
+{% endblock content %}
