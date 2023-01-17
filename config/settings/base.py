@@ -62,6 +62,8 @@ DJANGO_APPS = [
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
     "django.forms",
+    # https://realpython.com/location-based-app-with-geodjango-tutorial/
+    "django.contrib.gis",
 ]
 THIRD_PARTY_APPS = [
     "crispy_forms",
@@ -86,6 +88,8 @@ LOCAL_APPS = [
     "django_lab.bitcoin_tracker",
     # https://realpython.com/django-view-authorization/
     "django_lab.blog.apps.BlogConfig",
+    # https://realpython.com/location-based-app-with-geodjango-tutorial/
+    "django_lab.nearbyshops.apps.NearbyshopsConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
