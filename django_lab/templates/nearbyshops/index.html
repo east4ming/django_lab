@@ -13,4 +13,25 @@
 {% endfor %}
 </ul>
 {% endif %}
+<div id="mapid"></div>
+<script>
+    var map = L.map('mapid').setView([25.761681, -80.191788], 17);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    L.marker([25.761681, -80.191788]).addTo(map)
+        .bindPopup('I am in Miami.<br> Looking for shops.')
+        .openPopup();
+
+    {% for shop in shops %}
+    var circle = L.circle([{{ shop.location.y }}, {{ shop.location.x }}], {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: 10
+    }).addTo(map);
+    {% endfor %}
+</script>
 {% endblock content %}
