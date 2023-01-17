@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Nearby Shops{% endblock %}
+
+{% block content %}
+<h1>Nearby Shops</h1>
+{% if shops %}
+<ul>
+{% for shop in shops %}
+    <li>
+    {{ shop.name }}: {{ shop.distance }}
+    </li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endblock content %}

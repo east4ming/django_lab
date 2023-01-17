@@ -21,6 +21,7 @@ urlpatterns = [
     # Your stuff: custom urls includes go here
     path("projects/", include("django_lab.projects.urls")),
     path("blog/", include("django_lab.blog.urls")),
+    path("nearbyshops/", include("django_lab.nearbyshops.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if settings.DEBUG:
     # Static file serving when using Gunicorn + Uvicorn for local web socket development
