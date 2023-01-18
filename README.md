@@ -265,6 +265,12 @@ docker-compose -f local.yml run --rm django python manage.py createsuperuser
 
 `django` 是目标 service
 
+### 执行 Django Shell
+
+```bash
+docker-compose -f local.yml run --rm -it django python manage.py shell
+```
+
 ### (可选)指定 Docker 开发服务器 IP
 
 当 `DEBUG` 设置为 `True` 时，主机将根据 `['localhost', '127.0.0.1', '[::1]']` 进行验证。这在运行 `virtualenv` 时就足够了。对于 Docker，在 `config.settings.local` 里, 将您的主机开发服务器 IP 添加到 INTERNAL_IPS 或 ALLOWED_HOSTS(如果变量存在)。
