@@ -1,7 +1,8 @@
 import pytest
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
 
-from django_lab.users.models import User
+User = get_user_model()
 
 
 @pytest.fixture
