@@ -20,14 +20,26 @@ from django_lab.users.models import User
 
 
 @pytest.fixture
-def user_A(db) -> User:
+def app_user_group(db) -> Group:
     group = Group.objects.create(name="app_user")
     change_user_permissions = Permission.objects.filter(
         codename=["change_user", "view_user"],
     )
     group.permissions.add(*change_user_permissions)
+    return group
+
+
+@pytest.fixture
+def user_A(db, app_user_group: Group) -> User:
     user = User.objects.create_user("A")
-    user.groups.add(group)
+    user.groups.add(app_user_group)
+    return user
+
+
+@pytest.fixture
+def user_B(db, app_user_group: Group) -> User:
+    user = User.objects.create_user("B")
+    user.groups.add(app_user_group)
     return user
 
 
@@ -48,3 +60,7 @@ def test_should_not_check_unusable_password(db, user_A: User) -> None:
     user_A.set_password("secret")
     user_A.set_unusable_password()
     assert user_A.check_password("secret") is False
+
+
+def test_should_create_two_user(user_A: User, user_B: User) -> None:
+    assert user_A.pk != user_B.pk
