@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -12,23 +13,23 @@ from django.views.generic import (
 from .models import Entry
 
 
-class EntryListView(ListView):
+class EntryListView(LoginRequiredMixin, ListView):
     model = Entry
     queryset = Entry.objects.all().order_by("-date_created")
 
 
-class EntryDetailView(DetailView):
+class EntryDetailView(LoginRequiredMixin, DetailView):
     model = Entry
 
 
-class EntryCreateView(SuccessMessageMixin, CreateView):
+class EntryCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Entry
     fields = ["title", "content"]
     success_url = reverse_lazy("diary:entry-list")
     success_message = "Your new entry was created!"
 
 
-class EntryUpdateView(SuccessMessageMixin, UpdateView):
+class EntryUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Entry
     fields = ["title", "content"]
     success_message = "Your entry was updated!"
@@ -37,7 +38,7 @@ class EntryUpdateView(SuccessMessageMixin, UpdateView):
         return reverse_lazy("diary:entry-detail", kwargs={"pk": self.object.id})
 
 
-class EntryDeleteView(SuccessMessageMixin, DeleteView):
+class EntryDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Entry
     success_url = reverse_lazy("diary:entry-list")
     success_message = "Your entry was deleted!"
