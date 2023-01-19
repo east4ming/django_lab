@@ -37,14 +37,6 @@ jobs:
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.0
 
-      - name: Release and upload assets
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          draft: false
-          prerelease: false
-          generate_release_notes: true
-
   # With no caching at all the entire ci process takes 4m 30s to complete!
   pytest:
     runs-on: ubuntu-latest
