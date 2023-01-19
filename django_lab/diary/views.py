@@ -1,4 +1,13 @@
-from django.views.generic import DetailView, ListView
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+)
 
 from .models import Entry
 
@@ -10,3 +19,29 @@ class EntryListView(ListView):
 
 class EntryDetailView(DetailView):
     model = Entry
+
+
+class EntryCreateView(SuccessMessageMixin, CreateView):
+    model = Entry
+    fields = ["title", "content"]
+    success_url = reverse_lazy("diary:entry-list")
+    success_message = "Your new entry was created!"
+
+
+class EntryUpdateView(SuccessMessageMixin, UpdateView):
+    model = Entry
+    fields = ["title", "content"]
+    success_message = "Your entry was updated!"
+
+    def get_success_url(self):
+        return reverse_lazy("diary:entry-detail", kwargs={"pk": self.object.id})
+
+
+class EntryDeleteView(SuccessMessageMixin, DeleteView):
+    model = Entry
+    success_url = reverse_lazy("diary:entry-list")
+    success_message = "Your entry was deleted!"
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super().delete(request, *args, **kwargs)

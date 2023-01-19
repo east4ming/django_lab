@@ -1,0 +1,20 @@
+{% extends "diary/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="Save">
+    </form>
+    {% if entry %}
+        <a href="{% url 'diary:entry-detail' entry.id %}">
+            <button>Cancel</button>
+        </a>
+    {% else %}
+        <a href="{% url 'diary:entry-list' %}">
+            <button>Cancel</button>
+        </a>
+    {% endif %}
+{% endblock %}
