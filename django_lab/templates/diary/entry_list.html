@@ -1,0 +1,38 @@
+{% extends "diary/base.html" %}
+
+{% comment %} {% block content %}
+<h1><a href="/">Dear diary …</a></h1>
+{% for entry in entry_list %}
+    <article>
+        <h2 class="{{ entry.date_created|date:'l' }}">
+            {{ entry.date_created|date:'Y-m-d H:i' }}
+        </h2>
+        <h3>
+            <a href="{% url 'diary:entry-detail' entry.id %}">
+                {{ entry.title }}
+            </a>
+        </h3>
+    </article>
+{% endfor %}
+{% endblock content %} {% endcomment %}
+
+{% block content %}
+<h1><a href="/">Dear diary …</a></h1>
+
+<div class="row mb-2">
+  {% for entry in entry_list %}
+  <div class="col-md-6">
+    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+      <div class="col p-4 d-flex flex-column position-static">
+        <strong class="d-inline-block mb-2 text-primary">My Diary</strong>
+        <h3 class="mb-0">{{ entry.date_created|date:'l' }}</h3>
+        <div class="mb-1 text-muted">{{ entry.date_created|date:'Y-m-d H:i' }}</div>
+        <h5 class="card-text mb-auto">{{ entry.title }}</h5>
+        <a href="{% url 'diary:entry-detail' entry.id %}" class="stretched-link" align="right">Continue reading</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock content %}

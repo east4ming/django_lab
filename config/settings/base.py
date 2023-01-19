@@ -92,6 +92,8 @@ LOCAL_APPS = [
     "django_lab.blog.apps.BlogConfig",
     # https://realpython.com/location-based-app-with-geodjango-tutorial/
     "django_lab.nearbyshops.apps.NearbyshopsConfig",
+    # https://realpython.com/django-diary-project-python/
+    "django_lab.diary.apps.DiaryConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
