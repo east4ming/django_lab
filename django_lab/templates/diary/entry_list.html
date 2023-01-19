@@ -4,6 +4,17 @@
 <h1><a href="/">Dear diary …</a></h1>
 
 <div class="row mb-2">
+  <div class="col-md-6">
+    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+      <div class="col p-4 d-flex flex-column position-static">
+        <strong class="d-inline-block mb-2 text-primary">My Diary</strong>
+        <h3 class="mb-0">{% now 'l' %}</h3>
+        <div class="mb-1 text-muted">{% now 'Y-m-d H:i' %}</div>
+        <h5 class="card-text mb-auto">Add new entry</h5>
+        <a href="{% url 'diary:entry-create' %}" class="stretched-link" align="right">Continue Writing</a>
+      </div>
+    </div>
+  </div>
   {% for entry in entry_list %}
   <div class="col-md-6">
     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">

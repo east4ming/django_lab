@@ -6,5 +6,10 @@
     <p class="blog-post-meta">{{ entry.date_created|date:'Y-m-d H:i' }}</p>
 
     <p>{{ entry.content }}</p>
+
+        <div class="btn-group">
+          <a href="{% url 'diary:entry-update' entry.id %}" class="btn btn-primary my-2">✍️ Edit</a>
+          <a href="{% url 'diary:entry-delete' entry.id %}" class="btn btn-secondary my-2">⛔ Delete</a>
+        </div>
 </article>
 {% endblock content %}
