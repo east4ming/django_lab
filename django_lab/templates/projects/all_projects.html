@@ -3,18 +3,20 @@
 {% load static %}
 
 {% block content %}
-
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 {% for project in projects %}
-    <div class="col-md-4">
-        <div class="card mb-2">
-            <img class="card-img-top" src="{% static project.image %}" alt="{{ project.description }}">
+    <div class="col">
+        <div class="card shadow-sm">
+            <img class="bd-placeholder-img card-img-top" src="{% static project.image %}" width="100%" height="225" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>{{ project.title }}</title><rect width="100%" height="100%" fill="#55595c"/></img>
+
             <div class="card-body">
-                <h5 class="card-title">{{ project.title }}</h5>
                 <p class="card-text">{{ project.description }}</p>
-                <a href="{% url 'projects:project_detail' project.pk %}" class="btn btn-primary">Read More</a>
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="{% url 'projects:project_detail' project.pk %}" class="btn btn-sm btn-outline-primary">Read More</a>
+                </div>
             </div>
         </div>
     </div>
 {% endfor %}
-
+</div>
 {% endblock %}
