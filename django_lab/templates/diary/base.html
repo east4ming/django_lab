@@ -3,5 +3,9 @@
 {% block title %}My Diary{% endblock %}
 
 {% block content %}
-<h1><a href="/">Dear diary …</a></h1>
-{% endblock %}
+{% block diary_header %}
+<h1><a href="/diary/">Dear diary …</a></h1>
+{% endblock diary_header %}
+{% block diary_content %}
+{% endblock diary_content %}
+{% endblock content %}
