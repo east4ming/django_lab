@@ -82,18 +82,20 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "django_lab.users",
+    "django_lab.users.apps.UsersConfig",
     # Your stuff: custom apps go here
     # https://realpython.com/courses/django-portfolio-project/
     "django_lab.projects.apps.ProjectsConfig",
     # https://realpython.com/django-migrations-a-primer/
-    "django_lab.bitcoin_tracker",
+    "django_lab.bitcoin_tracker.apps.BitcoinTrackerConfig",
     # https://realpython.com/django-view-authorization/
     "django_lab.blog.apps.BlogConfig",
     # https://realpython.com/location-based-app-with-geodjango-tutorial/
     "django_lab.nearbyshops.apps.NearbyshopsConfig",
     # https://realpython.com/django-diary-project-python/
     "django_lab.diary.apps.DiaryConfig",
+    # https://realpython.com/django-todo-lists/
+    "django_lab.todo_app.apps.TodoAppConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
