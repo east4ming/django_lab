@@ -4,14 +4,14 @@
     <input
         value="Add a new list"
         type="button"
-        onclick="location.href='{% url "todo_app:list-add" %}'"/>
+        onclick="location.href='{% url "todo_app:list-add" %}'" class="btn btn-primary my-2" />
 </p>
 {% if object_list %}
 <h3>All my lists</h3>
 {% endif %}
-<ul>
+<ul class="list-group">
     {% for todolist in object_list %}
-    <li>
+    <li class="list-group-item list-group-item-primary">
         <div
             role="button"
             onclick="location.href='{% url "todo_app:list" todolist.id %}'">

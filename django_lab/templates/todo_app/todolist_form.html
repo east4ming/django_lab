@@ -12,11 +12,13 @@
             {{ form|crispy }}
             <input
                 value="Save"
-                type="submit">
+                type="submit"
+                class="btn btn-primary my-2">
             <input
                 value="Cancel"
                 type="button"
-                onclick="location.href='{% url "todo_app:index" %}';">
+                onclick="location.href='{% url "todo_app:index" %}';"
+                class="btn btn-secondary my-2">
         </form>
     </div>
 </div>

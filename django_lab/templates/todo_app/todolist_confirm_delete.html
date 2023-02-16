@@ -10,11 +10,13 @@
     {% csrf_token %}
     <input
         value="Yes, delete."
-        type="submit">
+        type="submit"
+        class="btn btn-primary my-2">
 </form>
 <input
     value="Cancel"
     type="button"
-    onclick="location.href='{% url "todo_app:index" %}';">
+    onclick="location.href='{% url "todo_app:index" %}';"
+    class="btn btn-secondary my-2">
 
 {% endblock %}
