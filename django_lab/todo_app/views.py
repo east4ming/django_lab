@@ -1,5 +1,5 @@
-from django.urls import reverse
-from django.views.generic import CreateView, ListView, UpdateView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from .models import ToDoItem, ToDoList
 
@@ -75,3 +75,20 @@ class ItemUpdate(UpdateView):
 
     def get_success_url(self) -> str:
         return reverse("todo_app:list", args=[self.object.todo_list_id])
+
+
+class ListDelete(DeleteView):
+    model = ToDoList
+    success_url = reverse_lazy("todo_app:index")
+
+
+class ItemDelete(DeleteView):
+    model = ToDoItem
+
+    def get_success_url(self) -> str:
+        return reverse_lazy("todo_app:list", args=[self.kwargs["list_id"]])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["todo_list"] = self.object.todo_list
+        return context

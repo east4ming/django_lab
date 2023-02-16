@@ -28,6 +28,11 @@
                 value="Add a new item"
                 type="button"
                 onclick="location.href='{% url "todo_app:item-add" todo_list.id %}'" />
+            <input
+            value="Delete this list"
+            type="button"
+            onclick="location.href=
+            '{% url "todo_app:list-delete" todo_list.id %}'" />
         </p>
     </div>
 </div>
