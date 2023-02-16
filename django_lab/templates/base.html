@@ -71,6 +71,9 @@
                 <a class="nav-link" href="{% url 'diary:entry-list' %}">Diary</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" href="{% url 'todo_app:index' %}">To-do</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="{% url 'about' %}">About</a>
               </li>
               {% if request.user.is_authenticated %}

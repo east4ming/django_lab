@@ -1,0 +1,26 @@
+{% extends "todo_app/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h3>{{ title }}</h3>
+<div>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input
+                value="Save"
+                type="submit"
+                class="btn btn-primary my-2">
+            <input
+                value="Cancel"
+                type="button"
+                onclick="location.href='{% url "todo_app:index" %}';"
+                class="btn btn-secondary my-2">
+        </form>
+    </div>
+</div>
+
+{% endblock %}
