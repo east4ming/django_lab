@@ -23,6 +23,7 @@ urlpatterns = [
     path("blog/", include("django_lab.blog.urls")),
     path("nearbyshops/", include("django_lab.nearbyshops.urls")),
     path("diary/", include("django_lab.diary.urls")),
+    path("todo/", include("django_lab.todo_app.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if settings.DEBUG:
     # Static file serving when using Gunicorn + Uvicorn for local web socket development
